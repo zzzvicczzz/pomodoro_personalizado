@@ -1,4 +1,6 @@
 /// Modelo que representa un ciclo Pomodoro (conjunto de sesiones y descansos).
+import '../config/constants.dart';
+
 class Cycle {
   /// Identificador único del ciclo.
   final String id;

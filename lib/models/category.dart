@@ -1,4 +1,6 @@
 /// Modelo que representa una categoría de sesión Pomodoro.
+import '../config/constants.dart';
+
 class Category {
   /// Identificador único de la categoría.
   final String id;
@@ -13,12 +15,9 @@ class Category {
   final String icon;
 
   /// Constructor de la clase Category.
-  Category({
-    required this.id,
-    required this.name,
-    required this.color,
-    required this.icon,
-  });
+  Category({required this.id, required this.name, int? color, String? icon})
+    : color = color ?? AppColors.work.value,
+      icon = icon ?? AppIcons.work;
 
   /// Método para copiar la categoría con cambios.
   Category copyWith({String? id, String? name, int? color, String? icon}) {

@@ -54,8 +54,5 @@ docs/
 - Dart SDK compatible
 - Android Studio o VS Code recomendado para desarrollo
 
-## Contribución
-Este proyecto sigue una metodología incremental y modular. Si deseas contribuir, revisa el plan de desarrollo en `docs/development_plan.md` y sigue las convenciones de commits y documentación.
-
 ## Licencia
 Este proyecto es de uso personal y educativo. Puedes modificarlo y adaptarlo según tus necesidades.
