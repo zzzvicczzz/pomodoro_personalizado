@@ -44,6 +44,13 @@ Asegurar que la aplicación se construya de forma ordenada, modular y libre de e
 - **Dependencias previas:** Tarea 1.
 - **Criterio de éxito:** Archivo de constantes creado, accesible y documentado.
 
+### Tarea 3.5 – Integración de Constantes en Modelos
+- **Objetivo:** Integrar el uso de las constantes globales definidas en `config/constants.dart` en los modelos principales (`Category`, `Session`, `Cycle`, `Stats`) para asegurar consistencia y facilitar el mantenimiento.
+- **Archivos/Módulos:** `models/category.dart`, `models/session.dart`, `models/cycle.dart`, `models/stats.dart`.
+- **Dependencias previas:** Tareas 2, 3.
+- **Criterio de éxito:** Modelos actualizados para utilizar las constantes globales en atributos relevantes (colores, iconos, duraciones, nombres), con documentación y sin romper compatibilidad.
+
+
 ### Tarea 4 – Implementación de Servicios de Persistencia Local
 - **Objetivo:** Crear servicios para almacenamiento local usando Hive.
 - **Archivos/Módulos:** `services/local_storage_service.dart`.
