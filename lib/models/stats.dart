@@ -1,18 +1,29 @@
 /// Modelo que representa las estadísticas generales del usuario en Pomodoro.
+import 'package:hive/hive.dart';
+
+part 'stats.g.dart';
+
+/// Adaptador Hive y modelo que representa las estadísticas generales del usuario en Pomodoro.
+@HiveType(typeId: 3)
 class Stats {
   /// Total de sesiones completadas.
+  @HiveField(0)
   final int totalSessions;
 
   /// Total de ciclos completados.
+  @HiveField(1)
   final int totalCycles;
 
   /// Total de minutos productivos.
+  @HiveField(2)
   final int productiveMinutes;
 
   /// Total de descansos realizados.
+  @HiveField(3)
   final int totalBreaks;
 
   /// Fecha de última actualización de estadísticas.
+  @HiveField(4)
   final DateTime lastUpdated;
 
   /// Constructor de la clase Stats.
