@@ -1,150 +1,220 @@
-# Plan de Desarrollo – Pomodoro Personalizado
 
-Este documento detalla el roadmap técnico para la construcción incremental de la app Flutter "Pomodoro Personalizado", siguiendo estrictamente los requerimientos del PRD, el MVP técnico y la arquitectura base definida. Su propósito es dividir el desarrollo en tareas pequeñas, secuenciales y verificables, facilitando la colaboración con IA y garantizando calidad y mantenibilidad.
+# 🧠 Plan de Desarrollo — Proyecto Pomodoro Personalizado
 
-## Objetivo General del Plan
-
-Asegurar que la aplicación se construya de forma ordenada, modular y libre de errores, respetando los requerimientos funcionales y técnicos definidos en los documentos base. El plan busca que cada tarea produzca código funcional y comprobable, permitiendo avanzar paso a paso hasta completar el MVP.
-
-## Metodología de Desarrollo
-
-- Se empleará una metodología incremental y modular.
-- La IA desarrollará una sola tarea a la vez, en orden secuencial.
-- Cada tarea debe generar código funcional y verificable antes de continuar.
-- Se respetarán los nombres, estructuras y convenciones definidos en los documentos base.
-- No se agregarán nuevas funcionalidades, pantallas ni dependencias externas no especificadas.
-
-## Orden de Implementación (Visión General)
-
-1. Configuración del proyecto base
-2. Definición de modelos
-3. Implementación de servicios
-4. Creación de managers/controladores
-5. Implementación de providers
-6. Desarrollo de UI y widgets
-7. Pruebas y refinamiento final
-
-## Lista Detallada de Tareas
-
-### Tarea 1 – Configuración Inicial del Proyecto
-- **Objetivo:** Crear el proyecto Flutter, configurar dependencias y estructura de carpetas según la arquitectura.
-- **Archivos/Módulos:** `main.dart`, carpetas `lib/`, `config/`, `models/`, `providers/`, `managers/`, `services/`, `repositories/`, `screens/`.
-- **Dependencias previas:** Ninguna.
-- **Criterio de éxito:** Proyecto Flutter funcional, estructura de carpetas creada, dependencias instaladas.
-
-### Tarea 2 – Definición de Modelos Base
-- **Objetivo:** Implementar los modelos principales: categoría, sesión, ciclo y estadísticas.
-- **Archivos/Módulos:** `models/category.dart`, `models/session.dart`, `models/cycle.dart`, `models/stats.dart`.
-- **Dependencias previas:** Tarea 1.
-- **Criterio de éxito:** Modelos definidos con atributos y métodos necesarios, documentados con comentarios `///`.
-
-### Tarea 3 – Configuración de Constantes y Temas
-- **Objetivo:** Centralizar constantes, colores y configuraciones globales.
-- **Archivos/Módulos:** `config/constants.dart`.
-- **Dependencias previas:** Tarea 1.
-- **Criterio de éxito:** Archivo de constantes creado, accesible y documentado.
-
-### Tarea 3.5 – Integración de Constantes en Modelos
-- **Objetivo:** Integrar el uso de las constantes globales definidas en `config/constants.dart` en los modelos principales (`Category`, `Session`, `Cycle`, `Stats`) para asegurar consistencia y facilitar el mantenimiento.
-- **Archivos/Módulos:** `models/category.dart`, `models/session.dart`, `models/cycle.dart`, `models/stats.dart`.
-- **Dependencias previas:** Tareas 2, 3.
-- **Criterio de éxito:** Modelos actualizados para utilizar las constantes globales en atributos relevantes (colores, iconos, duraciones, nombres), con documentación y sin romper compatibilidad.
-
-
-### Tarea 4 – Implementación de Servicios de Persistencia Local
-- **Objetivo:** Crear servicios para almacenamiento local usando Hive.
-- **Archivos/Módulos:** `services/local_storage_service.dart`.
-- **Dependencias previas:** Tareas 2, 3.
-- **Criterio de éxito:** Servicio funcional para guardar y recuperar datos de modelos.
-
-### Tarea 5 – Implementación de Servicios de Notificaciones y Sonido
-- **Objetivo:** Crear servicios para notificaciones locales y gestión de sonidos.
-- **Archivos/Módulos:** `services/notification_service.dart`, `services/sound_manager.dart`.
-- **Dependencias previas:** Tarea 1.
-- **Criterio de éxito:** Servicios capaces de enviar notificaciones y reproducir sonidos según eventos.
-
-### Tarea 6 – Creación de Repositorios
-- **Objetivo:** Implementar repositorios para la gestión de sesiones y categorías.
-- **Archivos/Módulos:** `repositories/session_repository.dart`, `repositories/category_repository.dart`.
-- **Dependencias previas:** Tareas 2, 4.
-- **Criterio de éxito:** Repositorios funcionales, integrados con servicios de persistencia.
-
-### Tarea 7 – Implementación de Managers y Controladores
-- **Objetivo:** Crear managers/controladores para timer, categorías, sesiones, estadísticas y modo enfoque.
-- **Archivos/Módulos:** `managers/timer_controller.dart`, `managers/category_manager.dart`, `managers/session_manager.dart`, `managers/stats_manager.dart`, `managers/focus_mode_controller.dart`.
-- **Dependencias previas:** Tareas 2, 4, 6.
-- **Criterio de éxito:** Managers con lógica de negocio, documentados y probados.
-
-### Tarea 8 – Implementación de Providers
-- **Objetivo:** Crear providers para gestión de estado de timer, categorías, sesiones y estadísticas.
-- **Archivos/Módulos:** `providers/timer_provider.dart`, `providers/category_provider.dart`, `providers/session_provider.dart`, `providers/stats_provider.dart`.
-- **Dependencias previas:** Tareas 2, 7.
-- **Criterio de éxito:** Providers funcionales, conectados a managers y actualizando la UI.
-
-### Tarea 9 – Desarrollo de Pantallas y Widgets Principales
-- **Objetivo:** Implementar las pantallas y widgets definidos en la arquitectura.
-- **Archivos/Módulos:** `screens/home_screen.dart`, `screens/pomodoro_timer.dart`, `screens/category_selector.dart`, `screens/stats_chart.dart`.
-- **Dependencias previas:** Tareas 2, 8.
-- **Criterio de éxito:** Pantallas funcionales, conectadas a providers y managers, siguiendo la arquitectura.
-
-### Tarea 10 – Integración de Gráficas y Estadísticas
-- **Objetivo:** Implementar gráficas interactivas para estadísticas usando las dependencias recomendadas.
-- **Archivos/Módulos:** `screens/stats_chart.dart`, dependencias `fl_chart` o `syncfusion_flutter_charts`.
-- **Dependencias previas:** Tareas 2, 8, 9.
-- **Criterio de éxito:** Gráficas funcionales, datos correctos y visualización adecuada.
-
-### Tarea 11 – Implementación de Modo Enfoque
-- **Objetivo:** Integrar wakelock para mantener la pantalla encendida durante el modo enfoque.
-- **Archivos/Módulos:** `managers/focus_mode_controller.dart`, dependencias `wakelock_plus`.
-- **Dependencias previas:** Tareas 7, 9.
-- **Criterio de éxito:** Modo enfoque funcional, pantalla permanece activa durante la sesión.
-
-### Tarea 12 – Pruebas Unitarias de Modelos y Lógica
-- **Objetivo:** Implementar pruebas unitarias para modelos y lógica de negocio.
-- **Archivos/Módulos:** Carpeta de tests, archivos de prueba para modelos y managers.
-- **Dependencias previas:** Tareas 2, 7.
-- **Criterio de éxito:** Pruebas ejecutadas y aprobadas, cobertura suficiente.
-
-### Tarea 13 – Pruebas de Integración y Refinamiento Final
-- **Objetivo:** Realizar pruebas de integración, corregir errores y refinar la app.
-- **Archivos/Módulos:** Todos los módulos y pantallas.
-- **Dependencias previas:** Todas las tareas anteriores.
-- **Criterio de éxito:** App estable, sin errores críticos, lista para entrega.
-
-## Dependencias Recomendadas
-
-| Paquete         | Uso                   | Versión mínima sugerida |
-|-----------------|----------------------|-------------------------|
-| hive_flutter    | Persistencia local    | ^1.1.0                  |
-| fl_chart        | Gráficas estadísticas | ^0.68.0                 |
-| wakelock_plus   | Modo enfoque          | ^1.1.1                  |
-| provider        | Gestión de estado     | ^6.1.1                  |
-
-## Convenciones de Desarrollo
-
-- Usar nombres descriptivos y consistentes para archivos, clases y variables, siguiendo la arquitectura (`category_manager.dart`, `Session`, `statsProvider`, etc.).
-- Documentar clases, métodos y modelos con comentarios `///`.
-- Realizar commits frecuentes y descriptivos, siguiendo buenas prácticas de control de versiones.
-- Aplicar principios SOLID y separación de responsabilidades en todas las capas.
-- Evitar lógica en Widgets; delegar a Providers/Managers.
-- Centralizar constantes y colores en `config/constants.dart`.
-- Mantener tests unitarios actualizados.
-
-## Reglas para Trabajar con IA
-
-- La IA debe desarrollar una sola tarea a la vez, siguiendo el orden del plan.
-- Cada entrega debe incluir código funcional y explicación breve.
-- La IA no debe modificar tareas previas sin indicación explícita.
-- Si algo no está especificado en el PRD, MVP o arquitectura, la IA debe preguntar antes de asumir o implementar.
-
-
-Al finalizar cada tarea, la IA debe obligatoriamente generar el informe de progreso, aunque no haya sido solicitado explícitamente.
-
-> **Nota:** Las secciones "Reglas para Trabajar con IA" y "Reglas de Informe de Progreso" son complementarias y obligatorias. Toda entrega debe cumplir ambas para considerarse válida.
+## 🧩 Estructura General
+El proyecto sigue una arquitectura modular y escalable. Cada tarea es una unidad de trabajo independiente con reporte obligatorio.  
+El objetivo es construir paso a paso un **Pomodoro personalizable**, con persistencia local, estadísticas y categorías.
 
 ---
 
-Este plan permite avanzar paso a paso en el desarrollo de "Pomodoro Personalizado", asegurando calidad, orden y alineación con los objetivos definidos en los documentos base.
+## ⚙️ TAREA 1 — CREACIÓN DEL PROYECTO
+
+- **Objetivo:** Crear el proyecto Flutter inicial.
+- **Pasos:**
+  1. Crear el proyecto con `flutter create pomodoro_personalizado`.
+  2. Abrir el proyecto en VS Code o Android Studio.
+  3. Eliminar comentarios innecesarios de `main.dart`.
+  4. Ejecutar `flutter pub get`.
+  5. Crear y subir repositorio a GitHub.
+
+- **Dependencias previas:** Ninguna.
+- **Criterio de éxito:** Proyecto creado, compilado y subido correctamente a GitHub.
+
+---
+
+## ⚙️ TAREA 1.1 — VERIFICACIÓN DE ESTRUCTURA Y CARPETAS CRÍTICAS
+
+- **Objetivo:** Confirmar que la estructura base del proyecto está lista.
+- **Carpetas requeridas:** `lib/config/`, `lib/models/`, `lib/providers/`, `lib/managers/`, `lib/services/`, `lib/repositories/`, `lib/screens/`, `hive_data/`, `docs/progress/`.
+- **Criterio de éxito:** Todas las carpetas existen y contienen al menos un archivo `.gitkeep` o `.md`.
+- **Dependencias previas:** Tarea 1.
+
+---
+
+## ⚙️ TAREA 1.2 — CONFIGURACIÓN Y PRUEBA DE HIVE LOCAL
+
+- **Objetivo:** Inicializar Hive y establecer el directorio base `hive_data/`.
+- **Archivos/Módulos:** `lib/services/local_storage_service.dart`, `main.dart`.
+- **Criterio de éxito:** Hive se inicializa sin errores y guarda un valor de prueba.
+- **Dependencias previas:** Tarea 1.1.
+
+---
+
+## ⚙️ TAREA 1.3 — VERIFICACIÓN DE IMPORTS Y RUTAS ABSOLUTAS
+
+- **Objetivo:** Asegurar consistencia en los imports (`import 'package:pomodoro_personalizado/...';`).
+- **Criterio de éxito:** Ningún error de importación durante la compilación.
+- **Dependencias previas:** Tarea 1.2.
+
+---
+
+## ⚙️ TAREA 2 — CONFIGURACIÓN DE DEPENDENCIAS
+
+- **Objetivo:** Agregar librerías necesarias en `pubspec.yaml`.
+- **Dependencias a instalar:**
+- `provider`
+- `hive`
+- `hive_flutter`
+- `path_provider`
+- `intl`
+- `flutter_slidable`
+- `fl_chart`
+
+
+- **Comando:**  
+```bash
+flutter pub add provider hive hive_flutter path_provider intl flutter_slidable fl_chart
+flutter pub get
+- **Criterio de éxito:** Todas las dependencias instaladas sin errores.
+```
+
+## ⚙️ TAREA 3 — MODELADO DE DATOS
+
+- **Objetivo:** Definir las clases base y estructura de datos para el sistema Pomodoro.
+- **Modelos:**
+	- Category
+	- Session
+	- Cycle
+	- Stats
+- **Ubicación:** `lib/models/`
+- **Dependencias previas:** Tarea 2.
+- **Criterio de éxito:** Modelos definidos y documentados, listos para persistencia y lógica de negocio.
+
+
+## ⚙️ TAREA 3.6 — CONFIGURACIÓN DE ADAPTADORES HIVE
+
+- **Objetivo:** Registrar adaptadores Hive para los modelos creados.
+- **Archivos/Módulos:** `lib/models/*.dart`, `main.dart`, `lib/services/local_storage_service.dart`
+- **Dependencias previas:** Tarea 3.
+- **Criterio de éxito:** Todos los adaptadores registrados y funcionales.
+
+
+## ⚙️ TAREA 3.7 — PRUEBA UNITARIA DE PERSISTENCIA BASE
+
+- **Objetivo:** Crear test mínimo que valide guardado y lectura con Hive.
+- **Archivo/Módulo:** `test/local_storage_test.dart`
+- **Dependencias previas:** Tarea 3.6.
+- **Criterio de éxito:** Test pasa exitosamente.
+
+
+## ⚙️ TAREA 4 — SERVICIOS DE DATOS (REPOSITORY)
+
+- **Objetivo:** Implementar la capa de acceso a datos para categorías y sesiones.
+- **Archivos/Módulos:**
+	- `lib/repositories/category_repository.dart`
+	- `lib/repositories/session_repository.dart`
+- **Dependencias previas:** Tarea 3.7.
+- **Criterio de éxito:** Lectura y escritura funcional de datos.
+
+
+## ⚙️ TAREA 5 — PROVIDERS Y MANAGERS
+
+- **Objetivo:** Crear Providers para manejar el estado global de la aplicación.
+- **Providers:**
+	- CategoryProvider
+	- TimerProvider
+	- StatsProvider
+- **Ubicación:** `lib/providers/`
+- **Dependencias previas:** Tarea 4.
+- **Criterio de éxito:** Providers funcionales y conectados a la lógica de negocio.
+
+
+## ⚙️ TAREA 6 — MANEJO DE CICLOS (LÓGICA DEL TEMPORIZADOR)
+
+- **Objetivo:** Implementar la clase `CycleManager` que controle los tiempos Pomodoro.
+- **Archivo/Módulo:** `lib/managers/cycle_manager.dart`
+- **Dependencias previas:** Tarea 5.
+- **Criterio de éxito:** Ciclos gestionados correctamente y lógica de temporizador funcional.
+
+
+## ⚙️ TAREA 7 — PERSISTENCIA DE ESTADÍSTICAS
+
+- **Objetivo:** Guardar duración de ciclos completados y sesiones.
+- **Archivo/Módulo:** `lib/services/stats_service.dart`
+- **Dependencias previas:** Tarea 6.
+- **Criterio de éxito:** Estadísticas guardadas y recuperadas correctamente.
+
+
+## ⚙️ TAREA 8 — CONFIGURACIÓN DE TEMA Y ESTILO GLOBAL
+
+- **Objetivo:** Definir `ThemeData`, colores, tipografía y estilo global de la app.
+- **Archivo/Módulo:** `lib/config/theme.dart`
+- **Dependencias previas:** Tarea 7.
+- **Criterio de éxito:** Tema global aplicado correctamente en la app.
+
+
+## ⚙️ TAREA 9 — INTERFAZ DE USUARIO (UI)
+
+### 🔹 TAREA 9.1 — DISEÑO BASE DE HOMESCREEN
+	- **Objetivo:** Crear estructura general de pantalla principal.
+	- **Archivo/Módulo:** `lib/screens/home_screen.dart`
+	- **Dependencias previas:** Tarea 8.
+	- **Criterio de éxito:** Pantalla principal funcional y visualmente clara.
+
+### 🔹 TAREA 9.2 — IMPLEMENTACIÓN DEL TEMPORIZADOR
+	- **Objetivo:** Añadir lógica visual del temporizador.
+	- **Archivo/Módulo:** `lib/screens/home_screen.dart`
+	- **Dependencias previas:** Tarea 9.1.
+	- **Criterio de éxito:** Temporizador visual y funcional en la UI.
+
+### 🔹 TAREA 9.3 — SELECTOR DE CATEGORÍAS
+	- **Objetivo:** Añadir lista de categorías con selección dinámica.
+	- **Archivo/Módulo:** `lib/screens/home_screen.dart`
+	- **Dependencias previas:** Tarea 9.2.
+	- **Criterio de éxito:** Selector de categorías funcional y conectado a la lógica.
+
+### 🔹 TAREA 9.4 — CONEXIÓN CON PROVIDERS
+	- **Objetivo:** Conectar interfaz con lógica de estado.
+	- **Dependencias previas:** Tarea 9.3.
+	- **Criterio de éxito:** UI actualizada dinámicamente según el estado global.
+
+### 🔹 TAREA 9.5 — ANIMACIONES Y DETALLES VISUALES
+	- **Objetivo:** Mejorar UX/UI (animaciones, transiciones, efectos).
+	- **Dependencias previas:** Tarea 9.4.
+	- **Criterio de éxito:** Experiencia visual mejorada y fluida.
+
+
+## ⚙️ TAREA 10 — PANTALLA DE ESTADÍSTICAS
+
+- **Objetivo:** Mostrar gráficos y resumen de productividad.
+- **Archivo/Módulo:** `lib/screens/stats_screen.dart`
+- **Dependencias previas:** Tarea 9.5.
+- **Criterio de éxito:** Estadísticas visualizadas correctamente en la UI.
+
+
+## ⚙️ TAREA 11 — CONFIGURACIÓN DE NAVEGACIÓN
+
+- **Objetivo:** Implementar Navigator o BottomNavigationBar para la navegación entre pantallas.
+- **Archivo/Módulo:** `lib/config/router.dart`
+- **Dependencias previas:** Tarea 10.
+- **Criterio de éxito:** Navegación funcional y sin errores.
+
+
+## ⚙️ TAREA 12 — PANTALLA DE CONFIGURACIÓN
+
+- **Objetivo:** Permitir personalizar tiempos Pomodoro y temas.
+- **Archivo/Módulo:** `lib/screens/settings_screen.dart`
+- **Dependencias previas:** Tarea 11.
+- **Criterio de éxito:** Configuración personalizada guardada y aplicada correctamente.
+
+
+## ⚙️ TAREA 13 — OPTIMIZACIÓN FINAL Y LIMPIEZA
+
+- **Objetivo:** Limpiar imports, eliminar código no usado y optimizar rendimiento.
+- **Dependencias previas:** Tarea 12.
+- **Criterio de éxito:** Proyecto optimizado, sin warnings ni código innecesario.
+
+
+## ⚙️ TAREA 14 — AUDITORÍA INTERNA
+
+- **Objetivo:** Verificar arquitectura, consistencia, dependencias y documentación.
+- **Criterio de éxito:**
+	- El proyecto compila sin errores.
+	- No hay warnings ni imports redundantes.
+	- `README.md` actualizado y coherente.
+- **Dependencias previas:** Tarea 13.
+
+---
 
 ## Reglas de Informe de Progreso (para cada tarea)
 
@@ -179,7 +249,7 @@ Breve descripción de lo implementado.
 ### 2. Código entregado
 ```dart
 // Fragmentos relevantes de código
-```
+
 
 ### 3. Pendientes o limitaciones
 Lista de aspectos no completados o que requieren revisión.
