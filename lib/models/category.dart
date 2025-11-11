@@ -1,17 +1,26 @@
 /// Modelo que representa una categoría de sesión Pomodoro.
 import '../config/constants.dart';
+import 'package:hive/hive.dart';
 
+part 'category.g.dart';
+
+/// Adaptador Hive y modelo que representa una categoría de sesión Pomodoro.
+@HiveType(typeId: 0)
 class Category {
   /// Identificador único de la categoría.
+  @HiveField(0)
   final String id;
 
   /// Nombre descriptivo de la categoría (ej: Trabajo, Estudio, Descanso).
+  @HiveField(1)
   final String name;
 
   /// Color asociado a la categoría para la UI.
+  @HiveField(2)
   final int color;
 
   /// Icono representativo de la categoría.
+  @HiveField(3)
   final String icon;
 
   /// Constructor de la clase Category.

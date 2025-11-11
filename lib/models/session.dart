@@ -1,21 +1,33 @@
 /// Modelo que representa una sesión Pomodoro.
+import 'package:hive/hive.dart';
+
+part 'session.g.dart';
+
+/// Adaptador Hive y modelo que representa una sesión Pomodoro.
+@HiveType(typeId: 1)
 class Session {
   /// Identificador único de la sesión.
+  @HiveField(0)
   final String id;
 
   /// Fecha y hora de inicio de la sesión.
+  @HiveField(1)
   final DateTime startTime;
 
   /// Fecha y hora de fin de la sesión.
+  @HiveField(2)
   final DateTime endTime;
 
   /// Duración total de la sesión en minutos.
+  @HiveField(3)
   final int duration;
 
   /// Categoría asociada a la sesión.
+  @HiveField(4)
   final String categoryId;
 
   /// Indica si la sesión fue completada exitosamente.
+  @HiveField(5)
   final bool completed;
 
   /// Constructor de la clase Session.

@@ -1,20 +1,30 @@
 /// Modelo que representa un ciclo Pomodoro (conjunto de sesiones y descansos).
-import '../config/constants.dart';
+// import '../config/constants.dart';
+import 'package:hive/hive.dart';
 
+part 'cycle.g.dart';
+
+/// Adaptador Hive y modelo que representa un ciclo Pomodoro (conjunto de sesiones y descansos).
+@HiveType(typeId: 2)
 class Cycle {
   /// Identificador único del ciclo.
+  @HiveField(0)
   final String id;
 
   /// Lista de identificadores de sesiones que forman el ciclo.
+  @HiveField(1)
   final List<String> sessionIds;
 
   /// Número total de sesiones en el ciclo.
+  @HiveField(2)
   final int totalSessions;
 
   /// Número de descansos realizados en el ciclo.
+  @HiveField(3)
   final int breaks;
 
   /// Fecha de creación del ciclo.
+  @HiveField(4)
   final DateTime createdAt;
 
   /// Constructor de la clase Cycle.
