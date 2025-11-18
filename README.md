@@ -52,7 +52,11 @@ docs/
 ## Requisitos
 - Flutter 3.9.2 o superior
 - Dart SDK compatible
+<<<<<<< HEAD
+- Android Studio o VS Code
+=======
 - Android Studio o VS Code recomendado para desarrollo
+>>>>>>> origin/development
 
 ## Licencia
-Este proyecto es de uso personal y educativo. Puedes modificarlo y adaptarlo según tus necesidades.
+Este proyecto es de uso personal y educativo.
