@@ -107,16 +107,174 @@ Convención: cada tarea incluye: objetivo, archivos, dependencias, subtareas num
   4. Pruebas manuales y unitarias donde aplique.
 - **Criterio de éxito:** Sonido reproducible, manejable y configurable.
 
-### Tarea 6 – Repositorios (REVISADA)
-- **Objetivo:** Puerta de dominio entre servicios y managers.
-- **Archivos:** repositories/*.dart + interfaces repositories/i_*_repository.dart
-- **Dependencias previas:** T2, T4
+### Tarea 5c – Pruebas unitarias + Documentación del subsistema de sonido
+- **Objetivo:** Validar completamente el SoundManager, resolver y motor con un fake engine.
+- **Archivos:** test/services/sound_manager_test.dart
+test/services/fakes/fake_audio_engine.dart
+docs/audio_system.md
+- **Dependencias previas:** T5b
 - **Subtareas:**
-  1. Definir contratos (SessionRepository, CategoryRepository, SettingsRepository, StatsRepository).
-  2. Implementaciones usando ILocalStorageService.
-  3. Manejo de mapeo DTO↔Model (si requiere).
-  4. Tests unitarios y de integración.
-- **Criterio de éxito:** Repositorios entregan datos coerentes, paginados/filtrables.
+  1. Crear fake/mock de AudioPlaybackEngine
+  2. Escribir pruebas unitarias para: initialize, updateSettings, setVolume, mute/unmute, playEvent (con themeResolver), playSelection, stop, dispose
+  3. Probar casos con: sonido deshabilitado, override de volumen, loop
+  4. Validar excepciones por inicialización no hecha
+- **Criterio de éxito:** Cobertura completa, tests determinísticos, sin dependencias reales de just_audio, y documentación clara del sistema.
+
+# Tarea 6 – Repositorios (DESGLOSE DEFINITIVO)
+
+> Esta tarea se divide en subtareas pequeñas, claras y aisladas, para reducir errores y garantizar que la IA no se salga del alcance.
+
+---
+
+## **6.1 – Definir contratos de repositorio (interfaces)**
+
+### **Objetivo**
+Crear las interfaces base que representan la capa de dominio para acceder a datos:  
+`SessionRepository`, `CategoryRepository`, `SettingsRepository`, `StatsRepository`.
+
+### **Archivos**
+- `lib/domain/repositories/i_session_repository.dart`
+- `lib/domain/repositories/i_category_repository.dart`
+- `lib/domain/repositories/i_settings_repository.dart`
+- `lib/domain/repositories/i_stats_repository.dart`
+
+### **Dependencias previas**
+- T2 – Modelos de dominio  
+- T4 – LocalStorageService (interfaces y contrato)
+
+### **Criterio de éxito**
+- Cada interfaz define **solo contratos**, no implementación.  
+- Los métodos están documentados.  
+- No se toca ningún archivo fuera de `/domain/repositories`.  
+- No se agregan ni modifican modelos o servicios.
+
+---
+
+## **6.2 – Crear DTOs y mapeo básico (si aplica)**
+
+### **Objetivo**
+Crear los DTO necesarios para convertir entre:
+- Modelos de dominio  
+- Formato de almacenamiento (Map<String, dynamic>)
+
+> Solo aplica si algún repositorio requiere estructura adicional.  
+> Si un modelo ya tiene `toMap()`/`fromMap()`, no crear DTO.
+
+### **Archivos**
+- `lib/infrastructure/dto/session_dto.dart`
+- `lib/infrastructure/dto/category_dto.dart`
+- `lib/infrastructure/dto/settings_dto.dart`
+- `lib/infrastructure/dto/stats_dto.dart`
+
+*(Crear únicamente los necesarios.)*
+
+### **Dependencias previas**
+- T2 – Modelos  
+- T4 – LocalStorageService  
+- T6.1 – Contratos creados
+
+### **Criterio de éxito**
+- DTOs contienen `toMap()` y `fromMap()`.  
+- No se modifica ningún modelo de dominio.  
+- No se implementa lógica de repositorio todavía.
+
+---
+
+## **6.3 – Implementaciones concretas usando LocalStorageService**
+
+### **Objetivo**
+Implementar cada repositorio usando `ILocalStorageService`, garantizando separación de capas.
+
+### **Archivos**
+- `lib/infrastructure/repositories/session_repository.dart`
+- `lib/infrastructure/repositories/category_repository.dart`
+- `lib/infrastructure/repositories/settings_repository.dart`
+- `lib/infrastructure/repositories/stats_repository.dart`
+
+### **Dependencias previas**
+- T4 – LocalStorageService funcional  
+- T6.1 – Interfaces listas  
+- T6.2 – DTOs completados (si existen)
+
+### **Criterio de éxito**
+- Cada repositorio implementa su interfaz correspondiente.  
+- Usa exclusivamente `ILocalStorageService`.  
+- Maneja correctamente sus claves internas de almacenamiento.  
+- No toca UI, providers, managers ni lógica de negocio.  
+- No modifica modelos existentes.  
+
+---
+
+## **6.4 – Pruebas unitarias de repositorios**
+
+### **Objetivo**
+Crear tests que aseguren que los repositorios funcionan correctamente.
+
+### **Archivos**
+- `test/repositories/session_repository_test.dart`
+- `test/repositories/category_repository_test.dart`
+- `test/repositories/settings_repository_test.dart`
+- `test/repositories/stats_repository_test.dart`
+
+### **Dependencias previas**
+- T6.3 – Implementaciones listas  
+- T4 – LocalStorageService mockeable
+
+### **Cobertura mínima**
+- Lectura de valores vacíos  
+- Guardar → Leer  
+- Eliminar  
+- Reemplazar valores  
+- Manejo de claves inexistentes  
+
+### **Criterio de éxito**
+- Todos los tests pasan sin warnings.  
+- No se mockea nada fuera del LocalStorageService.  
+- No se hace integración entre capas.  
+
+---
+
+## **6.5 – Documentación y registro de progreso**
+
+### **Objetivo**
+Documentar la tarea 6 y actualizar el avance del proyecto.
+
+### **Archivos**
+- `docs/progress/task-6.md`  
+- Actualización mínima en `development_plan.md`
+
+### **Dependencias previas**
+- T6.1 a T6.4 completas
+
+### **Criterio de éxito**
+- Se documentan decisiones, contratos, DTOs, implementación y tests.  
+- El progreso queda registrado sin alterar tareas futuras.  
+- No se agregan nuevas tareas ni se modifica la arquitectura.
+
+---
+
+# **Restricciones fuertes**
+La IA **NO debe**:
+- modificar managers (T7)  
+- generar providers (T8)  
+- tocar UI (T9)  
+- crear estadísticas nuevas (T10)  
+- crear lógica de focus mode (T11)  
+- hacer E2E tests (T13)  
+- agregar carpetas nuevas  
+- editar modelos existentes  
+- introducir dependencias nuevas  
+
+---
+
+# **Criterio de éxito general**
+Los repositorios:
+- entregan datos coherentes  
+- almacenan y leen usando ILocalStorageService  
+- no introducen lógica de negocio  
+- no rompen modelos  
+- tienen tests unitarios robustos  
+
 
 ### Tarea 7 – Managers / Controladores (REVISADA)
 - **Objetivo:** Contener la lógica de negocio (timers, reglas de sesión, focus mode orchestration).
